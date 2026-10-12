@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Theorous · Tarô &amp; cartomancia</title>
+<meta name="description" content="Tiragens particulares de tarô e cartomancia, online. Agende pelo WhatsApp.">
+<meta name="theme-color" content="#100c0b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Theorous · Tarô &amp; cartomancia">
+<meta property="og:description" content="Tiragens particulares, online. Agende pelo WhatsApp.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23100c0b'/%3E%3Cpolygon points='32,6 35,29 58,32 35,35 32,58 29,35 6,32 29,29' fill='none' stroke='%23c9a45c' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%238f1d2c' stroke='%23c9a45c' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root { padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
+  /* Layout: uma carta de tarô como capa (simétrica, moldura em arco) e, depois dela,
+     uma folha de grimório impressa: coluna única alinhada à esquerda, preços com pontilhado.
+     Visual único e escuro, por escolha: é a identidade do perfil. */
+  :root {
+    color-scheme: dark;
+    --noite: #100c0b;          /* fundo: preto de fuligem, puxado para o vermelho */
+    --noite-2: #1a1311;        /* face da carta */
+    --ouro: #c9a45c;           /* linhas, rótulos, links */
+    --ouro-fosco: #7a6238;     /* filetes e bordas */
+    --osso: #e9dfcd;           /* texto */
+    --osso-fosco: #b3a690;     /* texto secundário */
+    --carmesim: #8f1d2c;       /* ação principal */
+    --carmesim-claro: #a82637; /* ação principal, ao passar o dedo ou o cursor */
+    --brilho: rgb(201 164 92 / 0.10);
+
+    --display: "IM Fell English", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --versalete: "IM Fell English SC", "IM Fell English", "Iowan Old Style", Georgia, serif;
+    --texto: "Spectral", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: radial-gradient(ellipse 42rem 26rem at 50% 0, var(--brilho), transparent 70%) no-repeat, var(--noite);
+    color: var(--osso);
+    font-family: var(--texto);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  p, h1, h2, h3 { margin: 0; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--ouro);
+    outline-offset: 3px;
+  }
+
+  .pagina {
+    display: grid;
+    gap: 2.5rem;
+    max-width: 60rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    padding-block: 2rem 4rem;
+  }
+
+  /* Capa: a carta, a chamada e os dois botões */
+  .capa {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: center;
+    min-width: 0;
+  }
+
+  .carta {
+    position: relative;
+    display: grid;
+    gap: 0.875rem;
+    justify-items: center;
+    width: 100%;
+    max-width: 20rem;
+    padding: 2.5rem 1.5rem 2rem;
+    background: var(--noite-2);
+    border: 1px solid var(--ouro-fosco);
+    border-radius: 10rem 10rem 0.5rem 0.5rem;
+    text-align: center;
+  }
+  .carta::before {
+    content: "";
+    position: absolute;
+    inset: 0.4rem;
+    border: 1px solid var(--ouro-fosco);
+    border-radius: 9.6rem 9.6rem 0.25rem 0.25rem;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .emblema { display: block; width: 7rem; height: 7rem; }
+  .anel { transform-origin: 60px 60px; animation: giro 160s linear infinite; }
+  @keyframes giro { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .anel { animation: none; } }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.75rem, 13vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+
+  .oficio {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--versalete);
+    font-size: 0.875rem;
+    letter-spacing: 0.12em;
+    color: var(--ouro);
+  }
+  .oficio::before, .oficio::after {
+    content: "";
+    flex: none;
+    width: 1rem;
+    height: 1px;
+    background: var(--ouro-fosco);
+  }
+  @media (max-width: 22.5rem) {
+    .oficio::before, .oficio::after { display: none; }
+  }
+
+  .chamada {
+    max-width: 20rem;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--osso-fosco);
+  }
+
+  .acoes { display: grid; gap: 0.75rem; width: 100%; max-width: 20rem; }
+
+  .botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font: 600 1.0625rem/1.2 var(--texto);
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .botao-principal { background: var(--carmesim); color: var(--osso); border: 1px solid var(--carmesim-claro); }
+  .botao-principal:hover { background: var(--carmesim-claro); }
+  .botao-contorno { background: transparent; color: var(--ouro); border: 1px solid var(--ouro-fosco); }
+  .botao-contorno:hover { border-color: var(--ouro); color: var(--osso); }
+
+  /* Folha: serviços, como funciona, avisos, contato */
+  .folha {
+    display: grid;
+    gap: 2.25rem;
+    width: 100%;
+    max-width: 34rem;
+    margin-inline: auto;
+    min-width: 0;
+  }
+  .folha > section {
+    display: grid;
+    gap: 1.125rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--ouro-fosco);
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--versalete);
+    font-weight: 400;
+    font-size: 1.0625rem;
+    letter-spacing: 0.1em;
+    color: var(--ouro);
+  }
+
+  .servicos { display: grid; gap: 1.75rem; }
+  .servico { display: grid; gap: 0.5rem; }
+
+  .precos { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+  .precos li { display: flex; align-items: baseline; gap: 0.5rem; }
+  .precos .nome { min-width: 0; }
+  .precos .guia {
+    flex: 1 1 1.5rem;
+    min-width: 1.5rem;
+    border-bottom: 1px dotted var(--ouro-fosco);
+    transform: translateY(-0.3em);
+  }
+  .precos .valor { font-weight: 500; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+
+  .elo {
+    color: var(--ouro);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  .elo:hover { color: var(--osso); }
+
+  .passos { display: grid; gap: 0.875rem; margin: 0; padding: 0; list-style: none; counter-reset: passo; }
+  .passos li {
+    counter-increment: passo;
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    column-gap: 0.5rem;
+    align-items: baseline;
+  }
+  .passos li::before {
+    content: counter(passo, upper-roman);
+    font-family: var(--display);
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--ouro);
+  }
+
+  .avisos { display: grid; gap: 0.625rem; margin: 0; padding-left: 1.1rem; color: var(--osso-fosco); }
+  .avisos li::marker { color: var(--ouro-fosco); }
+
+  .contatos { display: grid; gap: 0.875rem; margin: 0; }
+  .contatos > div {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  .contatos dt { font-family: var(--versalete); font-size: 0.9375rem; letter-spacing: 0.1em; color: var(--ouro); }
+  .contatos dd { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.875rem; margin: 0; min-width: 0; }
+  .numero { font-weight: 500; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; user-select: all; -webkit-user-select: all; }
+
+  .botao-pequeno {
+    min-height: 2.25rem;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    color: var(--ouro);
+    border: 1px solid var(--ouro-fosco);
+    border-radius: 0.25rem;
+    font: 500 0.9375rem/1 var(--texto);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .botao-pequeno:hover { border-color: var(--ouro); color: var(--osso); }
+
+  .aviso-copia { font-size: 0.9375rem; color: var(--osso-fosco); }
+  .aviso-copia:not(:empty) { margin-top: 0.875rem; }
+
+  .rodape {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ouro-fosco);
+    font-family: var(--versalete);
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    color: var(--osso-fosco);
+  }
+
+  @media (min-width: 56rem) {
+    .pagina {
+      grid-template-columns: 22rem minmax(0, 1fr);
+      gap: 5rem;
+      align-items: start;
+      padding-block: 4rem 5rem;
+    }
+    .capa { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 2rem); }
+    .folha { margin-inline: 0; }
+    .folha > section:first-child { padding-top: 0; border-top: 0; }
+  }
+</style>
+</head>
+<body>
+<main class="pagina" lang="pt-BR">
+  <header class="capa">
+    <div class="carta">
+      <svg class="emblema" viewBox="0 0 120 120" role="img" aria-label="Olho dentro de uma estrela de oito pontas">
+        <circle cx="60" cy="60" r="56" fill="none" stroke="var(--ouro-fosco)" stroke-width="1" />
+        <circle class="anel" cx="60" cy="60" r="51" fill="none" stroke="var(--ouro)" stroke-width="2" stroke-dasharray="1 7.9" />
+        <polygon points="84,36 67,60 84,84 60,67 36,84 53,60 36,36 60,53" fill="var(--noite-2)" stroke="var(--ouro-fosco)" stroke-width="1" stroke-linejoin="round" />
+        <polygon points="60,8 65,55 112,60 65,65 60,112 55,65 8,60 55,55" fill="var(--noite-2)" stroke="var(--ouro)" stroke-width="1.25" stroke-linejoin="round" />
+        <path d="M34 60 Q60 38 86 60 Q60 82 34 60 Z" fill="var(--noite)" stroke="var(--ouro)" stroke-width="1.25" stroke-linejoin="round" />
+        <circle cx="60" cy="60" r="9" fill="var(--carmesim)" stroke="var(--ouro)" stroke-width="1" />
+        <circle cx="60" cy="60" r="3.5" fill="var(--noite)" />
+      </svg>
+      <h1>Theorous</h1>
+      <p class="oficio">Tarô &amp; cartomancia</p>
+    </div>
+
+    <p class="chamada">Tiragens particulares, online. Você recebe a foto das cartas e a leitura explicada.</p>
+
+    <div class="acoes">
+      <a class="botao botao-principal" href="https://wa.me/5543999788904?text=Ol%C3%A1%21%20Vim%20pela%20sua%20p%C3%A1gina%20e%20quero%20agendar." target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+      <a class="botao botao-contorno" href="https://www.instagram.com/iguana.4179282" target="_blank" rel="noopener">Abrir o Instagram</a>
+    </div>
+  </header>
+
+  <div class="folha">
+    <section aria-labelledby="t-servicos">
+      <h2 id="t-servicos">Serviços</h2>
+      <div class="servicos">
+        <article class="servico">
+          <h3>Tarô &amp; cartomancia</h3>
+          <p>Tiragem particular para a pergunta que você trouxer.</p>
+          <p><a class="elo" href="https://wa.me/5543999788904?text=Ol%C3%A1%21%20Vim%20pela%20sua%20p%C3%A1gina%20e%20quero%20saber%20valores%20e%20hor%C3%A1rios%20da%20tiragem%20de%20tar%C3%B4." target="_blank" rel="noopener">Consultar valores e horários</a></p>
+        </article>
+
+        <article class="servico">
+          <h3>Rituais</h3>
+          <ul class="precos">
+            <li><span class="nome">Bruxaria natural</span><span class="guia" aria-hidden="true"></span><span class="valor">R$ 50</span></li>
+            <li><span class="nome">Umbanda</span><span class="guia" aria-hidden="true"></span><span class="valor">R$ 150</span></li>
+            <li><span class="nome">Goécia / Demonolatria</span><span class="guia" aria-hidden="true"></span><span class="valor">R$ 600</span></li>
+          </ul>
+          <p><a class="elo" href="https://wa.me/5543999788904?text=Ol%C3%A1%21%20Vim%20pela%20sua%20p%C3%A1gina%20e%20quero%20saber%20mais%20sobre%20os%20rituais." target="_blank" rel="noopener">Perguntar sobre um ritual</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-como">
+      <h2 id="t-como">Como funciona</h2>
+      <ol class="passos">
+        <li>Você chama no WhatsApp ou no Instagram e conta o que procura.</li>
+        <li>Combinamos o serviço, o valor e o prazo antes de começar.</li>
+        <li>A leitura chega por mensagem, com a foto das cartas e a explicação.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="t-antes">
+      <h2 id="t-antes">Antes de agendar</h2>
+      <ul class="avisos">
+        <li>Tarô e rituais são práticas espirituais. Não há garantia de resultado.</li>
+        <li>Nenhum atendimento substitui médico, psicólogo, advogado ou orientação financeira.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="t-contato">
+      <h2 id="t-contato">Contato</h2>
+      <div>
+        <dl class="contatos">
+          <div>
+            <dt>WhatsApp</dt>
+            <dd>
+              <span class="numero" id="numero">+55 43 99978-8904</span>
+              <button class="botao-pequeno" type="button" id="copiar-numero">Copiar número</button>
+            </dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd><a class="elo" href="https://www.instagram.com/iguana.4179282" target="_blank" rel="noopener">@iguana.4179282</a></dd>
+          </div>
+        </dl>
+        <p class="aviso-copia" id="aviso-copia" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <footer class="rodape">Theorous · tarô &amp; cartomancia</footer>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var botao = document.getElementById('copiar-numero');
+    var numero = document.getElementById('numero');
+    var aviso = document.getElementById('aviso-copia');
+    if (!botao || !numero || !aviso) return;
+    var relogio;
+
+    function selecionarNumero() {
+      var faixa = document.createRange();
+      faixa.selectNodeContents(numero);
+      var selecao = window.getSelection();
+      selecao.removeAllRanges();
+      selecao.addRange(faixa);
+    }
+
+    function copiaFalhou() {
+      clearTimeout(relogio);
+      selecionarNumero();
+      aviso.textContent = 'Não deu para copiar. O número ficou selecionado: toque e segure sobre ele para copiar.';
+    }
+
+    botao.addEventListener('click', function () {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) { copiaFalhou(); return; }
+      navigator.clipboard.writeText('+5543999788904').then(function () {
+        aviso.textContent = 'Número copiado.';
+        clearTimeout(relogio);
+        relogio = setTimeout(function () { aviso.textContent = ''; }, 2500);
+      }, copiaFalhou);
+    });
+  })();
+</script>
+</body>
+</html>
